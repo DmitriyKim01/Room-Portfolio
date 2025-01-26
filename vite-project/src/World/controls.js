@@ -22,7 +22,7 @@ export default class Controls {
       // Desktop
       "(min-width: 969px)": () => {
         console.log("Desktop");
-        this.room.scale.set(1,1,1);
+        this.room.scale.set(1, 1, 1);
         this.experience.world.floor.plane.position.y = -0.2;
 
         // First section ---------------------------
@@ -74,14 +74,14 @@ export default class Controls {
         );
 
         this.secondMoveTimeline.to(
-            this.experience.world.floor.plane.position,
-            {
-                y: -0.8
-            },
+          this.experience.world.floor.plane.position,
+          {
+            y: -0.8,
+          },
           "synchronized"
-        )
+        );
 
-        this.experience.world.floor.plane.position
+        this.experience.world.floor.plane.position;
 
         // Third section --------------------------
 
@@ -98,8 +98,6 @@ export default class Controls {
           x: 6,
         });
       },
-    
-      
 
       // Mobile
       "(max-width: 968px)": () => {
@@ -149,19 +147,18 @@ export default class Controls {
           this.room.position,
           {
             x: -1.8,
-            y:-1
+            y: -1,
           },
           "synchronized-mobile"
         );
 
         this.secondMoveTimeline.to(
-            this.experience.world.floor.plane.position,
-            {
-                y: -1.2
-            },
+          this.experience.world.floor.plane.position,
+          {
+            y: -1.2,
+          },
           "synchronized-mobile"
-        )
-
+        );
 
         // Third section --------------------------
 
@@ -169,22 +166,104 @@ export default class Controls {
           scrollTrigger: {
             trigger: ".third-move",
             start: "top top",
+          },
+        });
+
+        this.thirdMoveTimeline.to(
+          this.camera.orthographicCamera.position,
+          {
+            y: -1.8,
+          },
+          "synchronized-mobile-third"
+        );
+      },
+
+      // all
+      all: () => {
+        // Outisde Platform Animations
+
+        this.secondPartTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".third-move",
+            start: "center center",
             end: "bottom bottom",
             scrub: 0.6,
             invalidateOnRefresh: true,
           },
         });
 
-        this.thirdMoveTimeline.to(this.camera.orthographicCamera.position, {
-            y: -1.8,
-        },
-    "synchronized-mobile-third");
+        this.room.children.forEach((child) => {
+          if (child.name === "Outside") {
+            this.first = GSAP.to(child.position, {
+              x: 0.8,
+              z: 1.5,
+
+              duration: 1,
+            });
+          }
+          if (child.name === "Mailbox") {
+            this.second = GSAP.to(child.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              ease: "back.out(2)",
+              duration: 0.5,
+            });
+          }
+          if (child.name === "Lamp") {
+            this.third = GSAP.to(child.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              ease: "back.out(2)",
+              duration: 0.5,
+            });
+          }
+          if (child.name === "OutsideCarpet") {
+            this.fourth = GSAP.to(child.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              ease: "back.out(2)",
+              duration: 0.5,
+            });
+          }
+          if (child.name === "OutsideCarpet1") {
+            this.fifth = GSAP.to(child.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              ease: "back.out(2)",
+              duration: 0.5,
+            });
+          }
+          if (child.name === "OutsideCarpet2") {
+            this.six = GSAP.to(child.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              ease: "back.out(2)",
+              duration: 0.5,
+            });
+          }
+          if (child.name === "OutsideCarpet3") {
+            this.seventh = GSAP.to(child.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              ease: "back.out(2)",
+              duration: 0.5,
+            });
+          }
+        });
+        this.secondPartTimeline.add(this.first);
+        this.secondPartTimeline.add(this.second, "-=0.2");
+        this.secondPartTimeline.add(this.third, "-=0.2");
+        this.secondPartTimeline.add(this.fourth, "-=0.2");
+        this.secondPartTimeline.add(this.fifth, "-=0.2");
+        this.secondPartTimeline.add(this.six, "-=0.2");
+        this.secondPartTimeline.add(this.seventh, "-=0.2");
       },
-
-
-
-      // all
-      all: function () {},
     });
   }
 

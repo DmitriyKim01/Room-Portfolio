@@ -56,6 +56,21 @@ export default class Room{
                     }
                 );
             }
+
+            if (child.name === "Outside"){
+                child.position.x = 0.003488;
+                child.position.z = 0.66505;
+            }
+
+            if (child.name === "Mailbox" || 
+                child.name === "Lamp" ||
+                child.name === "OutsideCarpet1" ||
+                child.name === "OutsideCarpet2" ||
+                child.name === "OutsideCarpet3" ||
+                child.name === "OutsideCarpet" 
+            ){
+                child.scale.set(0, 0, 0);
+            }
         })
         this.scene.add(this.actualRoom);
     }
