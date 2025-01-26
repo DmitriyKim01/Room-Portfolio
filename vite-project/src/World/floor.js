@@ -7,6 +7,7 @@ export default class Floor{
         this.experience = new Experience();
         this.scene = this.experience.scene;
         this.setFloor();
+        this.setCircles();
     }
 
     setFloor(){
@@ -20,6 +21,13 @@ export default class Floor{
         this.plane.rotation.x = Math.PI / 2;
         this.plane.position.y = -0.2;
         this.plane.receiveShadow = true;
+    }
+
+    setCircles(){
+        // const geometry = new THREE.CircleGeometry( 5, 32 ); 
+        // const material = new THREE.MeshStandardMaterial( { color: 0xffff00 } ); 
+        // const circle = new THREE.Mesh( geometry, material ); 
+        // this.scene.add( circle );
     }
 
 
