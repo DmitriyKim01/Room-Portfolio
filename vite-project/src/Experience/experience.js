@@ -7,6 +7,7 @@ import Renderer from './renderer.js';
 import World from '../World/world.js';
 import Resources from '../Utils/resources.js';
 import assets from '../Utils/assets.js';
+import Preloader from './Preloader.js';
 
 
 export default class Experience{
@@ -23,6 +24,7 @@ export default class Experience{
         this.renderer = new Renderer();
         this.resources = new Resources(assets);
         this.world = new World();
+        this.preloader = new Preloader();
         this.time = new Time();
 
         this.time.on("update", () => {

@@ -9,6 +9,8 @@ export default class Room{
         this.resources = this.experience.resources;
         this.room = this.resources.items.room;
         this.actualRoom = this.room.scene;
+
+        this.roomChildren = {}
         this.lerp = {
             current: 0,
             target: 0,
@@ -62,16 +64,24 @@ export default class Room{
                 child.position.z = 0.66505;
             }
 
-            if (child.name === "Mailbox" || 
-                child.name === "Lamp" ||
-                child.name === "OutsideCarpet1" ||
-                child.name === "OutsideCarpet2" ||
-                child.name === "OutsideCarpet3" ||
-                child.name === "OutsideCarpet" 
-            ){
-                child.scale.set(0, 0, 0);
+            // if (child.name === "Mailbox" || 
+            //     child.name === "Lamp" ||
+            //     child.name === "OutsideCarpet1" ||
+            //     child.name === "OutsideCarpet2" ||
+            //     child.name === "OutsideCarpet3" ||
+            //     child.name === "OutsideCarpet" 
+            // ){
+            //     child.scale.set(0, 0, 0);
+            // }
+
+            child.scale.set(0, 0, 0);
+            if (child.name==="Cube"){
+                // child.scale.set(1, 1, 1);
+                child.position.set(0, 0, 0);
+                child.rotation.y = Math.PI / 4;
             }
-        })
+            this.roomChildren[child.name.toLowerCase()] = child;
+        });
         this.scene.add(this.actualRoom);
     }
 

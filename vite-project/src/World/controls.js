@@ -203,7 +203,7 @@ export default class Controls {
           this.room.position,
           {
             x: -1.8,
-            y: -0.5,
+            y: -1.5,
           },
           "synchronized-mobile"
         );
@@ -382,9 +382,8 @@ export default class Controls {
             this.first = GSAP.to(child.position, {
               x: 0.8,
               z: 1.5,
-
               duration: 1,
-            });
+            })
           }
           if (child.name === "Mailbox") {
             this.second = GSAP.to(child.scale, {
