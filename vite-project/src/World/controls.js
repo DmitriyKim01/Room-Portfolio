@@ -267,11 +267,13 @@ export default class Controls {
             x: 3,
             y: 3,
             z: 3,
-          });
+          }, "first-circle").to(this.room.position, {
+            y: 0.3
+          }, "first-circle")
 
         this.thirdMoveTimeline = new GSAP.timeline({
             scrollTrigger: {
-              trigger: ".second-move",
+              trigger: ".third-move",
               start: "top top",
               end: "bottom bottom",
               scrub: 0.6,
@@ -281,7 +283,9 @@ export default class Controls {
             x: 3,
             y: 3,
             z: 3,
-          });
+          }, "second-circle").to(this.room.position, {
+            y: 0.3
+          }, "second-circle");
 
 
 

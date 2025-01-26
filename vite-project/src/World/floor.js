@@ -24,7 +24,7 @@ export default class Floor{
     }
 
     setCircles(){
-        this.geometry = new THREE.CircleGeometry(5, 32);
+        this.geometry = new THREE.CircleGeometry(5, 64);
 
         // Set the material for the circles
         this.material = new THREE.MeshStandardMaterial({ color: 0xa79277 });
@@ -37,9 +37,9 @@ export default class Floor{
         this.circleThird = new THREE.Mesh(this.geometry, this.material3);
 
         // Position circles above the floor
-        this.circleFirst.position.y = -0.19;
-        this.circleSecond.position.y = -0.18;
-        this.circleThird.position.y = -0.17;
+        this.circleFirst.position.y = -0.24;
+        this.circleSecond.position.y = -0.23;
+        this.circleThird.position.y = -0.22;
 
         // Add circles scale to none
         this.circleFirst.scale.set(0, 0, 0);
