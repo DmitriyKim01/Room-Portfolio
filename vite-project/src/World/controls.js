@@ -14,13 +14,20 @@ export default class Controls {
     this.sizes = this.experience.sizes;
 
     this.room = this.experience.world.room.actualRoom;
+
+    this.circleFirst = this.experience.world.floor.circleFirst;
+    this.circleSecond = this.experience.world.floor.circleSecond;
+    this.circleThird = this.experience.world.floor.circleThird;
+
+    
+
     GSAP.registerPlugin(ScrollTrigger);
     this.setSmoothScroll();
     this.setScrollTrigger();
   }
 
   setSmoothScroll() {
-
+    this.asscroll = this.setupASScroll();
   }
 
   setupASScroll() {
@@ -74,7 +81,7 @@ export default class Controls {
       "(min-width: 969px)": () => {
         console.log("Desktop");
         this.room.scale.set(1, 1, 1);
-        this.experience.world.floor.plane.position.y = -0.2;
+        this.experience.world.floor.plane.position.y = -0.25;
 
         // First section ---------------------------
         this.firstMoveTimeline = new GSAP.timeline({
@@ -232,6 +239,51 @@ export default class Controls {
       // all
       all: () => {
         // Outisde Platform Animations
+
+        // Circle Animation ---------------------------
+        this.firstMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".first-move",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        }).to(this.circleFirst.scale, {
+            x: 3,
+            y: 3,
+            z: 3,
+        });
+
+        this.secondMoveTimeline = new GSAP.timeline({
+            scrollTrigger: {
+              trigger: ".second-move",
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.6,
+              invalidateOnRefresh: true,
+            },
+          }).to(this.circleSecond.scale, {
+            x: 3,
+            y: 3,
+            z: 3,
+          });
+
+        this.thirdMoveTimeline = new GSAP.timeline({
+            scrollTrigger: {
+              trigger: ".second-move",
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.6,
+              invalidateOnRefresh: true,
+            },
+          }).to(this.circleThird.scale, {
+            x: 3,
+            y: 3,
+            z: 3,
+          });
+
+
 
         this.secondPartTimeline = new GSAP.timeline({
           scrollTrigger: {
