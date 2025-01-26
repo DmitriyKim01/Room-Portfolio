@@ -107,20 +107,47 @@ html, body{
   width: 50%;
   padding: 1000px 4%;
   margin: 0;
+  overflow: hidden;
   background-color: var(--primary-color);
+  position: relative;
 }
 
 .left{
   margin-right: auto;
   border-top-right-radius: 700px;
-  border-bottom-right-radius: 700px;
+  border-bottom-right-radius: 0px;
 }
 
 .right{
   margin-left: auto;
   border-top-left-radius: 700px;
-  border-bottom-left-radius: 700px;
+  border-bottom-left-radius: 0px;
 }
+
+/* Progress Bars */
+.progress-wrapper {
+  height: 0;
+  width: 12px;
+  z-index: 9999;
+}
+.progress-bar-wrapper-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.progress-bar-wrapper-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.progress-bar {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--tertiary-color);
+  transform-origin: top center;
+  transform: scaleY(1);
+}
+
 
 .section-intro-wrapper{
   position: relative;

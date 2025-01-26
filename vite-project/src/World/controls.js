@@ -19,8 +19,6 @@ export default class Controls {
     this.circleSecond = this.experience.world.floor.circleSecond;
     this.circleThird = this.experience.world.floor.circleThird;
 
-    
-
     GSAP.registerPlugin(ScrollTrigger);
     this.setSmoothScroll();
     this.setScrollTrigger();
@@ -199,13 +197,13 @@ export default class Controls {
             z: 2.5,
           },
           "synchronized-mobile"
-        );
+        )
 
         this.secondMoveTimeline.to(
           this.room.position,
           {
             x: -1.8,
-            y: -1,
+            y: -0.5,
           },
           "synchronized-mobile"
         );
@@ -238,7 +236,68 @@ export default class Controls {
 
       // all
       all: () => {
-        // Outisde Platform Animations
+
+
+        // Section Border Radius Animation ---------------------------
+        this.sections = document.querySelectorAll(".section");
+        this.sections.forEach((section) => {
+          this.progressWrapper = section.querySelector(".progress-wrapper");
+          this.progressBar = section.querySelector(".progress-bar");
+          if (section.classList.contains("right")) {
+            // Right Section Top Border
+            GSAP.to(section, {
+              borderTopLeftRadius: 10,
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "top top",
+                scrub: 0.6,
+              },
+            });
+            // Right Section Bottom Border
+            GSAP.to(section, {
+              borderBottomLeftRadius: 700,
+              scrollTrigger: {
+                trigger: section,
+                start: "bottom bottom",
+                end: "bottom top",
+                scrub: 0.6,
+              },
+            });
+          } else {
+            // Left Section Top Border
+            GSAP.to(section, {
+              borderTopRightRadius: 10,
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "top top",
+                scrub: 0.6,
+              },
+            });
+            // Left Section Bottom Border
+            GSAP.to(section, {
+              borderBottomRightRadius: 700,
+              scrollTrigger: {
+                trigger: section,
+                start: "bottom bottom",
+                end: "bottom top",
+                scrub: 0.6,
+              },
+            });
+          }
+          GSAP.from(this.progressBar, {
+            scaleY: 0,
+            scrollTrigger: {
+                trigger: section,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.4,
+                pin: this.progressWrapper,
+                pinSpacing: false,
+            }
+          })
+        });
 
         // Circle Animation ---------------------------
         this.firstMoveTimeline = new GSAP.timeline({
@@ -250,45 +309,64 @@ export default class Controls {
             invalidateOnRefresh: true,
           },
         }).to(this.circleFirst.scale, {
-            x: 3,
-            y: 3,
-            z: 3,
+          x: 3,
+          y: 3,
+          z: 3,
         });
 
         this.secondMoveTimeline = new GSAP.timeline({
-            scrollTrigger: {
-              trigger: ".second-move",
-              start: "top top",
-              end: "bottom bottom",
-              scrub: 0.6,
-              invalidateOnRefresh: true,
+          scrollTrigger: {
+            trigger: ".second-move",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        })
+          .to(
+            this.circleSecond.scale,
+            {
+              x: 3,
+              y: 3,
+              z: 3,
             },
-          }).to(this.circleSecond.scale, {
-            x: 3,
-            y: 3,
-            z: 3,
-          }, "first-circle").to(this.room.position, {
-            y: 0.3
-          }, "first-circle")
+            "first-circle"
+          )
+          .to(
+            this.room.position,
+            {
+              y: 0.3,
+            },
+            "first-circle"
+          );
 
         this.thirdMoveTimeline = new GSAP.timeline({
-            scrollTrigger: {
-              trigger: ".third-move",
-              start: "top top",
-              end: "bottom bottom",
-              scrub: 0.6,
-              invalidateOnRefresh: true,
+          scrollTrigger: {
+            trigger: ".third-move",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        })
+          .to(
+            this.circleThird.scale,
+            {
+              x: 3,
+              y: 3,
+              z: 3,
             },
-          }).to(this.circleThird.scale, {
-            x: 3,
-            y: 3,
-            z: 3,
-          }, "second-circle").to(this.room.position, {
-            y: 0.3
-          }, "second-circle");
+            "second-circle"
+          )
+          .to(
+            this.room.position,
+            {
+              y: 0.3,
+            },
+            "second-circle"
+          );
 
-
-
+        // Outdoors Ground animation ---------------------------
         this.secondPartTimeline = new GSAP.timeline({
           scrollTrigger: {
             trigger: ".third-move",
