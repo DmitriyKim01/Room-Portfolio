@@ -39,9 +39,9 @@ export default class Room{
                 })
             }
 
-            if (child.name === "Screen"){
-                this.resources.items.screen.flipY = false; // Add this line
-                child.material = new THREE.MeshBasicMaterial(
+            if (child.name === "Monitor"){
+                this.resources.items.screen.flipY = false;
+                child.children[1].material = new THREE.MeshBasicMaterial(
                     {
                         map: this.resources.items.messenger,
                         side: THREE.DoubleSide
@@ -49,11 +49,10 @@ export default class Room{
                 );
             }
 
-            if (child.name === "LaptopScreen"){
-                child.material = new THREE.MeshBasicMaterial(
+            if (child.name === "Laptop"){
+                child.children[3].material = new THREE.MeshBasicMaterial(
                     {
-                        map: this.resources.items.screen,
-                        side: THREE.DoubleSide
+                        map: this.resources.items.screen
                     }
                 );
             }
