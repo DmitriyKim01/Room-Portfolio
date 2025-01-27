@@ -20,6 +20,8 @@ export default class Controls {
     this.circleThird = this.experience.world.floor.circleThird;
 
     GSAP.registerPlugin(ScrollTrigger);
+
+    document.querySelector(".page").style.overflow = "visible";
     this.setSmoothScroll();
     this.setScrollTrigger();
   }

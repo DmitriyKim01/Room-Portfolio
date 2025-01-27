@@ -9,6 +9,9 @@ import Resources from '../Utils/resources.js';
 import assets from '../Utils/assets.js';
 import Preloader from './Preloader.js';
 
+import Controls from '../World/controls.js';
+
+
 
 export default class Experience{
     static instance
@@ -27,6 +30,10 @@ export default class Experience{
         this.preloader = new Preloader();
         this.time = new Time();
 
+        this.preloader.on("enableControls", () => {
+            this.controls = new Controls();
+        })
+
         this.time.on("update", () => {
             this.update();
         })
@@ -39,6 +46,7 @@ export default class Experience{
         this.camera.update();
         this.renderer.update();
         this.world.update();
+        this.preloader.update();
     }
 
     resize()
