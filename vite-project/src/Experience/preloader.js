@@ -1,6 +1,7 @@
 import EventEmitter from "events";
 import Experience from "./experience";
 import GSAP from "gsap";
+import convertToSpan from "../Utils/convertDivsToSpans";
 
 export default class Preloader extends EventEmitter {
   constructor() {
@@ -24,12 +25,16 @@ export default class Preloader extends EventEmitter {
   }
 
   setAssets() {
+    convertToSpan(document.querySelector(".intro-text"));
+    convertToSpan(document.querySelector(".hero-main-title"));
+    convertToSpan(document.querySelector(".hero-main-description"));
+    convertToSpan(document.querySelector(".hero-second-subheading"));
+    convertToSpan(document.querySelector(".second-sub"));
     this.room = this.experience.world.room.actualRoom;
     this.roomChildren = this.experience.world.room.roomChildren;
   }
 
   firstIntro() {
-
     return new Promise((resolve) => {
       this.timeline = new GSAP.timeline();
       if (this.device === "desktop") {
@@ -45,7 +50,6 @@ export default class Preloader extends EventEmitter {
             x: -1,
             ease: "power1.out",
             duration: 0.7,
-            onComplete: resolve,
           });
       }
       // Mobile
@@ -62,9 +66,19 @@ export default class Preloader extends EventEmitter {
             z: -1,
             ease: "power1.out",
             duration: 0.7,
-            onComplete: resolve,
           });
       }
+
+      this.timeline
+        .to(".intro-text .animatedis", {
+          yPercent: -100,
+          stagger: 0.05,
+          ease: "back.out(1.2)",
+          onComplete: resolve,
+        })
+        .to(".arrow-svg-wrapper", {
+          opacity: 1,
+        });
     });
   }
 
@@ -72,16 +86,27 @@ export default class Preloader extends EventEmitter {
     if (event.deltaY > 0) {
       this.removeEventListeners();
       await this.playSecondIntro();
+      this.scaleFlag = false;
       this.emit("enableControls");
     }
   }
 
   async playSecondIntro() {
     this.moveFlag = false;
+    this.scaleFlag = true;
     return new Promise((resolve) => {
       this.secondTimeline = new GSAP.timeline();
 
+      this.secondTimeline.to(".intro-text .animatedis", {
+        yPercent: 100,
+        stagger: 0.05,
+        ease: "back.in(1.2)",
+      });
+
       this.secondTimeline
+        .to(".arrow-svg-wrapper", {
+          opacity: 0,
+        })
         .to(
           this.room.position,
           {
@@ -96,6 +121,7 @@ export default class Preloader extends EventEmitter {
           this.roomChildren.cube.rotation,
           {
             y: 2 * Math.PI + Math.PI / 4,
+            duration: 0.5,
           },
           "cube-animation"
         )
@@ -289,13 +315,60 @@ export default class Preloader extends EventEmitter {
           },
           "chair"
         )
+        .to(
+          ".hero-main-title .animatedis",
+          {
+            yPercent: -100,
+            stagger: 0.05,
+            ease: "back.out(1.5)",
+          },
+          "reveal"
+        )
+        .to(
+          ".hero-main-description .animatedis",
+          {
+            yPercent: -100,
+            stagger: 0.05,
+            ease: "back.out(1.5)",
+          },
+          "reveal"
+        )
+        .to(
+          ".first-sub .animatedis",
+          {
+            yPercent: -100,
+            stagger: 0.05,
+            ease: "back.out(1.5)",
+          },
+          "reveal"
+        )
+        .to(
+          ".second-sub .animatedis",
+          {
+            yPercent: -100,
+            stagger: 0.07,
+            ease: "back.out(1.5)",
+          },
+          "reveal"
+        )
+
         .to(this.roomChildren.outside.scale, {
           x: 1,
           y: 1,
           z: 1,
           ease: "back.out(1.5)",
           duration: 0.3,
+        })
+        .to(".arrow-svg-wrapper", {
+          opacity: 1,
           onComplete: resolve,
+        })
+        .to(".arrow-svg-wrapper", {
+          opacity: 0,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut",
         });
     });
   }
@@ -310,6 +383,7 @@ export default class Preloader extends EventEmitter {
     if (difference > 0) {
       this.removeEventListeners();
       await this.playSecondIntro();
+      this.scaleFlag = false;
       this.emit("enableControls");
     }
     this.initialY = null;
@@ -335,15 +409,26 @@ export default class Preloader extends EventEmitter {
 
   move() {
     if (this.device === "desktop") {
-        this.room.position.set(-1, 0, 0);
-      } else {
-        this.room.position.set(0, 0, -1);
-      }
+      this.room.position.set(-1, 0, 0);
+    } else {
+      this.room.position.set(0, 0, -1);
+    }
+  }
+
+  scale() {
+    if (this.device === "desktop") {
+      this.room.scale.set(1, 1, 1);
+    } else {
+      this.room.scale.set(0.6, 0.6, 0.6);
+    }
   }
 
   update() {
     if (this.moveFlag) {
       this.move();
+    }
+    if (this.scaleFlag) {
+      this.scale();
     }
   }
 }
