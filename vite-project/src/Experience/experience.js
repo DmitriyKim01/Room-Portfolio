@@ -7,7 +7,7 @@ import Renderer from './renderer.js';
 import World from '../World/world.js';
 import Resources from '../Utils/resources.js';
 import assets from '../Utils/assets.js';
-import Preloader from './Preloader.js';
+import Preloader from './preloader.js';
 
 import Controls from '../World/controls.js';
 

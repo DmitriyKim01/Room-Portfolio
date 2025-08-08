@@ -19,7 +19,9 @@ export default class Renderer{
             antialias: true,
         });
         this.renderer.physicallyCorrectLights = true;
-        this.renderer.outputEncoding = THREE.sRGBEncoding;
+        // three.js r172 removed `sRGBEncoding` in favor of color spaces
+        // Use `outputColorSpace` with `SRGBColorSpace` to ensure correct colors
+        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.toneMapping = THREE.CineonToneMapping;
         this.renderer.toneMappingExposure = 1.75;
         this.renderer.shadowMap.enabled = true;
